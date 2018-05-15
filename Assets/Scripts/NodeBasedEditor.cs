@@ -6,6 +6,7 @@ public class NodeBasedEditor : EditorWindow
 {
     private List<Node> nodes;
     private List<Connection> connections;
+    private List<Character> characters;
 
     private GUIStyle nodeStyle;
     private GUIStyle selectedNodeStyle;
@@ -18,7 +19,7 @@ public class NodeBasedEditor : EditorWindow
     private Vector2 offset;
     private Vector2 drag;
 
-    [MenuItem("Window/Node Based Editor")]
+    [MenuItem("Ryan's/Node Based Editor")]
     private static void OpenWindow()
     {
         NodeBasedEditor window = GetWindow<NodeBasedEditor>();
