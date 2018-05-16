@@ -8,9 +8,9 @@ public class Character : ScriptableObject
     [SerializeField]
     private string name;
 
-    public string Name
-    {
-        get { return Name; }
-        set { this.name = Name; }
-    }
+    //public string Name
+    //{
+    //    get { return Name; }
+    //    set { this.name = Name; }
+    //}
 }

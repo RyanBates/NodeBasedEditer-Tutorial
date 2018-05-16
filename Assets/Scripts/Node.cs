@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -18,6 +19,10 @@ public class Node
 
     public Action<Node> OnRemoveNode;
 
+    public List<Character> characters;
+
+    public Node() { }
+
     public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action<ConnectionPoint> OnClickInPoint, Action<ConnectionPoint> OnClickOutPoint, Action<Node> OnClickRemoveNode)
     {
         rect = new Rect(position.x, position.y, width, height);
@@ -34,13 +39,22 @@ public class Node
         rect.position += delta;
     }
 
+    public void Draw(string name)
+    {
+        inPoint.Draw();
+        outPoint.Draw();
+        GUI.Box(rect, name, style);
+    }
+
+    string data;
     public void Draw()
     {
         inPoint.Draw();
         outPoint.Draw();
         GUI.Box(rect, title, style);
-
-
+        var textrect = new Rect(rect.x, rect.y, rect.width/2, rect.height/2);
+        textrect.center = rect.center;
+        data = EditorGUI.TextField(textrect, data);
     }
 
     public bool ProcessEvents(Event e)
@@ -100,6 +114,6 @@ public class Node
     {
         if (OnRemoveNode != null)
             OnRemoveNode(this);
-        
+
     }
 }

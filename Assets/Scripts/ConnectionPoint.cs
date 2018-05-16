@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public enum ConnectionPointType { In, Out }
+public enum ConnectionPointType { In, Out, Connected }
 
 public class ConnectionPoint
 {
@@ -36,6 +36,10 @@ public class ConnectionPoint
 
             case ConnectionPointType.Out:
                 rect.x = node.rect.x + node.rect.width - 8f;
+                break;
+
+            case ConnectionPointType.Connected:
+                OnClickConnectionPoint(this);
                 break;
         }
 

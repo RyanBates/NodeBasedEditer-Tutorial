@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.Collections;
+using System.IO;
 
 public class NodeBasedEditor : EditorWindow
 {
+    private string textBox;
+
     private List<Node> nodes;
     private List<Connection> connections;
+
+    [SerializeField]
+    private Character character;
+    [SerializeField]
     private List<Character> characters;
 
     private GUIStyle nodeStyle;
@@ -54,16 +62,18 @@ public class NodeBasedEditor : EditorWindow
 
         DrawNodes();
         DrawConnections();
-
-        BuildTextBox();
-        DisplayCharacterNames();
-
+        
         DrawConnectionLine(Event.current);
 
         ProcessNodeEvents(Event.current);
         ProcessEvents(Event.current);
 
         if (GUI.changed) Repaint();
+
+        if (GUILayout.Button(new GUIContent("Save"), EditorStyles.toolbarButton, GUILayout.Width(35)))
+            Save();
+        if (GUILayout.Button(new GUIContent("Load"), EditorStyles.toolbarButton, GUILayout.Width(35)))
+            Load();
     }
 
     private void DrawGrid(float gridSpacing, float gridOpacity, Color gridColor)
@@ -94,28 +104,64 @@ public class NodeBasedEditor : EditorWindow
     {
         if (nodes != null)
             for (int i = 0; i < nodes.Count; i++)
+            {
                 nodes[i].Draw();
+
+                //if(nodes.Count >= characters.Count)
+                //    characters.Add(character);
+                
+            }
     }
+
+    //private void DisplayCharacterNames()
+    //{
+    //    int count = 0;
+
+    //    foreach (Character character in characters)
+    //    {
+    //        count++;
+    //        GUI.TextField(new Rect(10, 10, 200, 100), character.name, characters[count].name);
+    //    }
+    //}
 
     private void DrawConnections()
     {
         if (connections != null)
             for (int i = 0; i < connections.Count; i++)
-                connections[i].Draw();
+                connections[i].Draw();       
     }
 
-    private void BuildTextBox()
+    /// <summary>
+    /// have it save the string combining the two nodes seeing if both 
+    /// nodes have a connection point on either the in or out point 
+    /// </summary>    
+    int savenumber = 0;
+    bool isConnected = false;
+    private void Save()
     {
-        
+        var path = Path.Combine(Application.dataPath, "Saves");
+        var filename = savenumber++.ToString() + ".json";
+        var savepath = Path.Combine(path, filename);
+
+        Node node = new Node();
+
+        if (node.inPoint == node.outPoint)
+            isConnected = true;
+        if(isConnected == true)
+        {
+
+        }
+
+            
+
+            File.WriteAllText(savepath, "");
     }
 
-    private void DisplayCharacterNames()
+    private void Load()
     {
-        if (nodes != null && characters != null)
-            for (int i = 0; i < characters.Count; i++)
-                nodes[i].Draw();
+        Debug.Log("load was hit");   
     }
-
+    
 
     private void ProcessEvents(Event e)
     {
