@@ -2,9 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [CreateAssetMenu]
 public class Character : ScriptableObject
 {
-    string Value;
+    [SerializeField]
+    private string name;
+
+    public string Name
+    {
+        get { return Name; }
+        set { this.name = Name; }
+    }
 }

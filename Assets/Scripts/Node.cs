@@ -39,6 +39,8 @@ public class Node
         inPoint.Draw();
         outPoint.Draw();
         GUI.Box(rect, title, style);
+
+
     }
 
     public bool ProcessEvents(Event e)

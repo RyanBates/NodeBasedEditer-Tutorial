@@ -23,7 +23,7 @@ public class NodeBasedEditor : EditorWindow
     private static void OpenWindow()
     {
         NodeBasedEditor window = GetWindow<NodeBasedEditor>();
-        window.titleContent = new GUIContent("Node Based Editor");
+        window.titleContent = new GUIContent("Name Display");
     }
 
     private void OnEnable()
@@ -54,6 +54,9 @@ public class NodeBasedEditor : EditorWindow
 
         DrawNodes();
         DrawConnections();
+
+        BuildTextBox();
+        DisplayCharacterNames();
 
         DrawConnectionLine(Event.current);
 
@@ -92,19 +95,27 @@ public class NodeBasedEditor : EditorWindow
         if (nodes != null)
             for (int i = 0; i < nodes.Count; i++)
                 nodes[i].Draw();
-   
-
     }
 
     private void DrawConnections()
     {
         if (connections != null)
-        {
             for (int i = 0; i < connections.Count; i++)
                 connections[i].Draw();
-            
-        }
     }
+
+    private void BuildTextBox()
+    {
+        
+    }
+
+    private void DisplayCharacterNames()
+    {
+        if (nodes != null && characters != null)
+            for (int i = 0; i < characters.Count; i++)
+                nodes[i].Draw();
+    }
+
 
     private void ProcessEvents(Event e)
     {
