@@ -8,6 +8,8 @@ public class Connection
     public ConnectionPoint outPoint;
     public Action<Connection> OnClickRemoveConnection;
 
+    public Connection(){ }
+
     public Connection(ConnectionPoint inPoint, ConnectionPoint outPoint, Action<Connection> OnClickRemoveConnection)
     {
         this.inPoint = inPoint;

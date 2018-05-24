@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿/// anything commented out is something ive tried.
+
+using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
@@ -10,11 +12,6 @@ public class NodeBasedEditor : EditorWindow
 
     private List<Node> nodes;
     private List<Connection> connections;
-
-    [SerializeField]
-    private Character character;
-    [SerializeField]
-    private List<Character> characters;
 
     private GUIStyle nodeStyle;
     private GUIStyle selectedNodeStyle;
@@ -135,31 +132,71 @@ public class NodeBasedEditor : EditorWindow
     /// have it save the string combining the two nodes seeing if both 
     /// nodes have a connection point on either the in or out point 
     /// </summary>    
-    int savenumber = 0;
-    bool isConnected = false;
+    //bool connected = false;
     private void Save()
     {
         var path = Path.Combine(Application.dataPath, "Saves");
-        var filename = savenumber++.ToString() + ".json";
+        ///this makes it to where the save button cant be hit until there is at least on connection between nodes.
+        ///and making them save to one file instead of making a new
+        ///file for everytime i hit the save button
+        path.Contains(nodes.ToString());
+        path.Contains(connections.ToString());
+        var filename = "1.json";
         var savepath = Path.Combine(path, filename);
 
-        Node node = new Node();
+        ///this below creates new nodes and connections when the save button is hit. 
+        ///does not actually save to the file.
+        //Node node = new Node(new Vector2(position.x, position.y), 10, 10, this.nodeStyle, this.selectedNodeStyle, this.inPointStyle, this.outPointStyle, this.OnClickInPoint, this.OnClickOutPoint, this.OnClickRemoveNode);
+        //Connection connection = new Connection(node.inPoint, node.outPoint, this.OnClickRemoveConnection);
+        //nodes.Add(node);
+        //connections.Add(connection);
+        //var nodeSaver = JsonUtility.ToJson(node);
+        //var connectionSaver = JsonUtility.ToJson(connections);
+        ///end of what creates the nodes and connections
+        
+        ///tried doing just the connections
+        //Node node = new Node(new Vector2(position.x, position.y), 10, 10, this.nodeStyle, this.selectedNodeStyle, this.inPointStyle, this.outPointStyle, this.OnClickInPoint, this.OnClickOutPoint, this.OnClickRemoveNode);
+        //Connection connection = new Connection(node.inPoint, node.outPoint, this.OnClickRemoveConnection);
+        //if (connection.inPoint == connection.outPoint)
+        //    connected = true;
+        //if (connected == true)
+        //{
+        //    connections.Add(connection);
+        //    var connectionSaves = JsonUtility.ToJson(connections, true);
+        //    File.WriteAllText(savepath, connectionSaves);
+        //}
 
-        if (node.inPoint == node.outPoint)
-            isConnected = true;
-        if(isConnected == true)
-        {
+        ///Tried to save what was already in the lists to see if anything would 
+        ///be in there. Both the list are empty and I should of known that 
+        ///before I tried doing this.
+        //var nodeSaver = JsonUtility.ToJson(nodes, true);
+        //var connectionSaver = JsonUtility.ToJson(connections, true);
 
-        }
+        //File.WriteAllText(savepath, nodeSaver);
+        //File.WriteAllText(savepath, connectionSaver);
 
-            
+        ///going to brain storm at work about what I could do to fix this 
+        
 
-            File.WriteAllText(savepath, "");
+        ///Questions to think about 
+        ///1) should it be from a list of connections?
+        ///2) should i even worry about the nodes and only focus on the connections between them?
+        ///3) how do?
+
+
+        File.WriteAllText(savepath, "");
     }
 
     private void Load()
     {
-        Debug.Log("load was hit");   
+        var nodeLoader = JsonUtility.FromJson<Node>(Application.dataPath + "Saves/1.json");
+        var connectionLoader = JsonUtility.FromJson<Connection>(Application.dataPath + "Saves/1.json");
+
+        File.OpenText(nodeLoader.ToString());
+        File.OpenText(connectionLoader.ToString());
+
+        //File.Open(nodeLoader.ToString(), FileMode.Open);
+        //File.Open(connectionLoader.ToString(), FileMode.Open);
     }
     
 
