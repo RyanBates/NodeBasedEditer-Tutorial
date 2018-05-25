@@ -132,73 +132,67 @@ public class NodeBasedEditor : EditorWindow
     /// have it save the string combining the two nodes seeing if both 
     /// nodes have a connection point on either the in or out point 
     /// </summary>    
-    //bool connected = false;
+    float savenumber;
     private void Save()
     {
         var path = Path.Combine(Application.dataPath, "Saves");
-        ///this makes it to where the save button cant be hit until there is at least on connection between nodes.
+        ///this makes it to where the save button cant be hit
+        ///until there is at least on connection between nodes.
         ///and making them save to one file instead of making a new
         ///file for everytime i hit the save button
         path.Contains(nodes.ToString());
         path.Contains(connections.ToString());
-        var filename = "1.json";
-        var savepath = Path.Combine(path, filename);
+        var filename = savenumber++.ToString() + ".json";
+        var savepath = Path.Combine(path, "1.json");
 
-        ///this below creates new nodes and connections when the save button is hit. 
-        ///does not actually save to the file.
-        //Node node = new Node(new Vector2(position.x, position.y), 10, 10, this.nodeStyle, this.selectedNodeStyle, this.inPointStyle, this.outPointStyle, this.OnClickInPoint, this.OnClickOutPoint, this.OnClickRemoveNode);
-        //Connection connection = new Connection(node.inPoint, node.outPoint, this.OnClickRemoveConnection);
-        //nodes.Add(node);
-        //connections.Add(connection);
-        //var nodeSaver = JsonUtility.ToJson(node);
-        //var connectionSaver = JsonUtility.ToJson(connections);
-        ///end of what creates the nodes and connections
+        string savestring = "";
+        foreach (var node in nodes)
+        {
+            savestring += node.data;
+
+            //if (node.outPoint.type != null && node.inPoint.type != null)
+            //    savestring += " " + node.outPoint.node.data;
+
+            //if (node.inPoint.type == null && node.outPoint.type == null)
+            //    break;
+        }
+
+        var currentNode = new Node();
+        var nextNode = new Node();
+
+
+
         
-        ///tried doing just the connections
-        //Node node = new Node(new Vector2(position.x, position.y), 10, 10, this.nodeStyle, this.selectedNodeStyle, this.inPointStyle, this.outPointStyle, this.OnClickInPoint, this.OnClickOutPoint, this.OnClickRemoveNode);
-        //Connection connection = new Connection(node.inPoint, node.outPoint, this.OnClickRemoveConnection);
-        //if (connection.inPoint == connection.outPoint)
-        //    connected = true;
-        //if (connected == true)
-        //{
-        //    connections.Add(connection);
-        //    var connectionSaves = JsonUtility.ToJson(connections, true);
-        //    File.WriteAllText(savepath, connectionSaves);
-        //}
+        while(nextNode.inPoint.node != null)
+        {
+            currentNode = nextNode;
 
-        ///Tried to save what was already in the lists to see if anything would 
-        ///be in there. Both the list are empty and I should of known that 
-        ///before I tried doing this.
-        //var nodeSaver = JsonUtility.ToJson(nodes, true);
-        //var connectionSaver = JsonUtility.ToJson(connections, true);
+            nextNode.data = currentNode.data;
 
-        //File.WriteAllText(savepath, nodeSaver);
-        //File.WriteAllText(savepath, connectionSaver);
-
-        ///going to brain storm at work about what I could do to fix this 
-        
-
-        ///Questions to think about 
-        ///1) should it be from a list of connections?
-        ///2) should i even worry about the nodes and only focus on the connections between them?
-        ///3) how do?
+        }
 
 
-        File.WriteAllText(savepath, "");
+
+        var json = JsonUtility.ToJson(savestring);
+                
+        File.WriteAllText(savepath, savestring);
     }
 
     private void Load()
     {
-        var nodeLoader = JsonUtility.FromJson<Node>(Application.dataPath + "Saves/1.json");
-        var connectionLoader = JsonUtility.FromJson<Connection>(Application.dataPath + "Saves/1.json");
+        //Node node = new Node();
+        //Connection connection = new Connection();
+
+        //JsonUtility.FromJsonOverwrite(Application.dataPath + "Saves/1.json", node);
+        //JsonUtility.FromJsonOverwrite(Application.dataPath + "Saves/1.json", connection);
+
+        var nodeLoader = JsonUtility.FromJson<Node>(Application.dataPath + "Saves/3.json");
+        var connectionLoader = JsonUtility.FromJson<Connection>(Application.dataPath + "Saves/3.json");
 
         File.OpenText(nodeLoader.ToString());
         File.OpenText(connectionLoader.ToString());
-
-        //File.Open(nodeLoader.ToString(), FileMode.Open);
-        //File.Open(connectionLoader.ToString(), FileMode.Open);
     }
-    
+
 
     private void ProcessEvents(Event e)
     {
@@ -210,16 +204,13 @@ public class NodeBasedEditor : EditorWindow
                 if (e.button == 0)
                     ClearConnectionSelection();
                 
-
                 if (e.button == 1)
                     ProcessContextMenu(e.mousePosition);
-                
                 break;
 
             case EventType.MouseDrag:
                 if (e.button == 0)
                     OnDrag(e.delta);
-                
                 break;
         }
     }

@@ -46,7 +46,7 @@ public class Node
         GUI.Box(rect, name, style);
     }
 
-    string data;
+    public string data;
     public void Draw()
     {
         inPoint.Draw();
