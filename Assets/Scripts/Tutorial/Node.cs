@@ -114,6 +114,5 @@ public class Node
     {
         if (OnRemoveNode != null)
             OnRemoveNode(this);
-
     }
 }

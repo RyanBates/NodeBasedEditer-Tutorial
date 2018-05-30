@@ -1,6 +1,4 @@
-﻿/// anything commented out is something ive tried.
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Collections;
@@ -52,8 +50,8 @@ public class NodeBasedEditor : EditorWindow
 
     private void OnGUI()
     {
-        DrawGrid(20, 0.2f, Color.gray);
-        DrawGrid(100, 0.4f, Color.gray);
+        DrawGrid(20, 0.2f, Color.grey);
+        DrawGrid(100, 0.4f, Color.grey);
 
         DrawNodes();
         DrawConnections();
@@ -163,7 +161,7 @@ public class NodeBasedEditor : EditorWindow
         while (next != null)
         {
             savestring += current.data;
-            next = current.
+            next = current;
            
 
             //if (nodes.Count >= nodes.Count)
