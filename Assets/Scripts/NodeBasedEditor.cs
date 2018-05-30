@@ -8,8 +8,6 @@ using System.IO;
 
 public class NodeBasedEditor : EditorWindow
 {
-    private string textBox;
-
     private List<Node> nodes;
     private List<Connection> connections;
 
@@ -142,39 +140,37 @@ public class NodeBasedEditor : EditorWindow
         ///file for everytime i hit the save button
         path.Contains(nodes.ToString());
         path.Contains(connections.ToString());
+
         var filename = savenumber++.ToString() + ".json";
         var savepath = Path.Combine(path, "1.json");
 
         string savestring = "";
-        foreach (var node in nodes)
+        //foreach (var node in nodes)
+        //{
+        //    savestring += node.data;
+
+        //    //if (node.outPoint.type != null && node.inPoint.type != null)
+        //    //    savestring += " " + node.outPoint.node.data;
+
+        //    //if (node.inPoint.type == null && node.outPoint.type == null)
+        //    //    break;
+        //}
+
+        var current = new Node();
+        current = nodes[0];
+        var next = current;
+
+        while (next != null)
         {
-            savestring += node.data;
+            savestring += current.data;
+            next = current.
+           
 
-            //if (node.outPoint.type != null && node.inPoint.type != null)
-            //    savestring += " " + node.outPoint.node.data;
-
-            //if (node.inPoint.type == null && node.outPoint.type == null)
+            //if (nodes.Count >= nodes.Count)
             //    break;
         }
-
-        var currentNode = new Node();
-        var nextNode = new Node();
-
-
-
         
-        while(nextNode.inPoint.node != null)
-        {
-            currentNode = nextNode;
-
-            nextNode.data = currentNode.data;
-
-        }
-
-
-
         var json = JsonUtility.ToJson(savestring);
-                
         File.WriteAllText(savepath, savestring);
     }
 
