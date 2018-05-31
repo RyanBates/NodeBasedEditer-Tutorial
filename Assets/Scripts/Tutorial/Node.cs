@@ -18,9 +18,7 @@ public class Node
     public GUIStyle selectedNodeStyle;
 
     public Action<Node> OnRemoveNode;
-
-    public List<Character> characters;
-
+    
     public Node() { }
 
     public Node(Vector2 position, float width, float height, GUIStyle nodeStyle, GUIStyle selectedStyle, GUIStyle inPointStyle, GUIStyle outPointStyle, Action<ConnectionPoint> OnClickInPoint, Action<ConnectionPoint> OnClickOutPoint, Action<Node> OnClickRemoveNode)
