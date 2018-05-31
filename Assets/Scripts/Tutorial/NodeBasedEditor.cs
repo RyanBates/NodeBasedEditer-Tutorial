@@ -126,14 +126,14 @@ public class NodeBasedEditor : EditorWindow
 
     /// <summary>
     /// have it save the string combining the two nodes seeing if both 
-    /// nodes have a connection point on either the in or out point 
+    /// nodes have a _connection point on either the in or out point 
     /// </summary>    
     float savenumber;
     private void Save()
     {
         var path = Path.Combine(Application.dataPath, "Saves");
         ///this makes it to where the save button cant be hit
-        ///until there is at least on connection between nodes.
+        ///until there is at least on _connection between nodes.
         ///and making them save to one file instead of making a new
         ///file for everytime i hit the save button
         path.Contains(nodes.ToString());
@@ -175,10 +175,10 @@ public class NodeBasedEditor : EditorWindow
     private void Load()
     {
         //Node node = new Node();
-        //Connection connection = new Connection();
+        //Connection _connection = new Connection();
 
         //JsonUtility.FromJsonOverwrite(Application.dataPath + "Saves/1.json", node);
-        //JsonUtility.FromJsonOverwrite(Application.dataPath + "Saves/1.json", connection);
+        //JsonUtility.FromJsonOverwrite(Application.dataPath + "Saves/1.json", _connection);
 
         var nodeLoader = JsonUtility.FromJson<Node>(Application.dataPath + "Saves/3.json");
         var connectionLoader = JsonUtility.FromJson<Connection>(Application.dataPath + "Saves/3.json");

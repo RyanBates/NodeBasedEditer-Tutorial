@@ -9,15 +9,12 @@ namespace RyansTools
     {
         Event e;
 
-        public Rect nodeRect;
-        public Connection connection;
-        public ConnectionPoint connectionPoint;
+        public Rect _nodeRect;
+        public Connection _connection;
+        public ConnectionPoint _connectionPoint;
 
-        public string data;
+        private string _data;
 
-        public bool isSelected;
-        public bool isDraggable;
-
-        public Action<Node> OnRemoveNode;
+        public bool isSelected, isDraggable;
     }
 }

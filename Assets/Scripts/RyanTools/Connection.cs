@@ -9,6 +9,9 @@ namespace RyansTools
 {
     public class Connection : UIElements
     {
+
+        public bool connection = false;
+
         public override void Draw()
         {
 

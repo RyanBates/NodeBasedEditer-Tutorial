@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace RyansTools
 {
-    public abstract class UIElements : MonoBehaviour
+    public abstract class UIElements 
     {
         public virtual void Draw() { }
         public virtual void PollEvents(Event e) { }
+
+        protected Rect _rect;
     }
 }

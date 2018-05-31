@@ -1,74 +1,64 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace RyansTools
 {
-    public class NodeEditorWindow : UnityEditor.EditorWindow
+    public class NodeEditorWindow : EditorWindow
     {
-        private Node node;
-        private ConnectionPoint connectionPoint;
-        private Connection connection;
-
-
-        private List<Node> nodes;
-        private List<Connection> connections;
-
+        private Node _node;
+        private List<Node> _nodes;
         [MenuItem("Ryan's/Ryan's Window")]
         private static void CreateWindow()
         {
-            var window = UnityEngine.ScriptableObject.CreateInstance<NodeEditorWindow>();
+            var window = CreateInstance<NodeEditorWindow>();
             window.Show();
         }
+        private void OnEnable()
+        {
+            _node = new Node {_nodeRect = new Rect(100, 100, 200, 200)};
+            _nodes = new List<Node> {_node};
+        }
+
 
         private void OnGUI()
         {
-            DrawNode();
-            DrawConnectionPoint();
-            DrawConnection();
-
-            node.PollEvents(Event.current);
+            PollEvents(Event.current);
+            _nodes.ForEach(n => n.PollEvents(Event.current));
+            _nodes.ForEach(n => n.Draw());
         }
 
-        private void AddNodes(Vector2 mousePosition)
-        {
-            if (nodes == null)
-                nodes = new List<Node>();
 
-            nodes.Add(new Node(mousePosition, 200, 50));
-        }
-
-        private void ProcessContextMenu(Vector2 mousePosition)
+        private void PollEvents(Event e)
         {
-            GenericMenu genericMenu = new GenericMenu();
-            genericMenu.AddItem(new GUIContent("Add node"), false, () => AddNodes(mousePosition));
-            genericMenu.ShowAsContext();
-        }
-
-        private void DrawNode()
-        {
-            if(nodes != null)
+            switch (e.type)
             {
-                for(int i = 0; i <= nodes.Count; i++)
-                {
-                    nodes[i].Draw();
-                }
-            }
+                case EventType.MouseDown:
+                    if (e.button == 1 && !_node._nodeRect.Contains(e.mousePosition))
+                    {
+                        ProcessContextMenu(e);
+                    }
+                    break;
+            }            
         }
 
-        private void DrawConnectionPoint()
+        private void ProcessContextMenu(Event e)
         {
-
+            var gm = new GenericMenu();
+            gm.AddItem(new GUIContent("Add Node"), false, AddNode, e);
+            gm.ShowAsContext();
+            e.Use();
         }
 
-        private void DrawConnection()
+        private void AddNode(Event e)
         {
-
+            _nodes.Add(new Node() {_nodeRect = new Rect(e.mousePosition, new Vector2(_node._nodeRect.width, _node._nodeRect.height))});
         }
 
-
+        private void AddNode(object obj)
+        {
+            AddNode(obj as Event);
+        }
     }
 }
