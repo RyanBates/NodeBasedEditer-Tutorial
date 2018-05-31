@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace RyansTools
+namespace RyanTools
 {
     public partial class Node
     {

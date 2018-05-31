@@ -1,19 +1,32 @@
-﻿using UnityEngine;
+﻿using RyanTools;
+using UnityEngine;
 
-namespace RyansTools
+namespace RyanTools
 {
     public partial class Node : UIElements
     {
+        /// <summary>
+        /// this is the constructor
+        /// </summary>
+        /// <param name="rect"></param>
         public Node(Rect rect)
         {
             NodeRect = rect;
         }
 
+        /// <summary>
+        /// this is to make the objects.
+        /// </summary>
         public override void Draw()
         {
             GUI.Box(NodeRect, "Display This");
         }
 
+
+        /// <summary>
+        /// the events or inputs
+        /// </summary>
+        /// <param name="e"></param>
         public override void PollEvents(Event e)
         {
             switch (e.type)
@@ -50,6 +63,10 @@ namespace RyansTools
             base.PollEvents(e);
         }
 
+        /// <summary>
+        /// a function just to take care of an event above
+        /// </summary>
+        /// <param name="e"></param>
         public void Drag(Event e)
         {
             NodeRect.position += e.delta;
