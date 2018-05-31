@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,15 +8,17 @@ namespace RyansTools
     {
         private Node _node;
         private List<Node> _nodes;
+
         [MenuItem("Ryan's/Ryan's Window")]
         private static void CreateWindow()
         {
             var window = CreateInstance<NodeEditorWindow>();
             window.Show();
         }
+
         private void OnEnable()
         {
-            _node = new Node {_nodeRect = new Rect(100, 100, 200, 200)};
+            _node = new Node {NodeRect = new Rect(100, 100, 200, 200)};
             _nodes = new List<Node> {_node};
         }
 
@@ -35,12 +36,9 @@ namespace RyansTools
             switch (e.type)
             {
                 case EventType.MouseDown:
-                    if (e.button == 1 && !_node._nodeRect.Contains(e.mousePosition))
-                    {
-                        ProcessContextMenu(e);
-                    }
+                    if (e.button == 1 && !_node.NodeRect.Contains(e.mousePosition)) ProcessContextMenu(e);
                     break;
-            }            
+            }
         }
 
         private void ProcessContextMenu(Event e)
@@ -53,7 +51,10 @@ namespace RyansTools
 
         private void AddNode(Event e)
         {
-            _nodes.Add(new Node() {_nodeRect = new Rect(e.mousePosition, new Vector2(_node._nodeRect.width, _node._nodeRect.height))});
+            _nodes.Add(new Node
+            {
+                NodeRect = new Rect(e.mousePosition, new Vector2(_node.NodeRect.width, _node.NodeRect.height))
+            });
         }
 
         private void AddNode(object obj)

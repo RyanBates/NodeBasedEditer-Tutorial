@@ -1,20 +1,13 @@
-﻿using UnityEngine;
-using System;
-
+﻿using JetBrains.Annotations;
+using UnityEngine;
 
 namespace RyansTools
 {
-
     public partial class Node
     {
-        Event e;
+        public Rect NodeRect;
 
-        public Rect _nodeRect;
-        public Connection _connection;
-        public ConnectionPoint _connectionPoint;
-
-        private string _data;
-
-        public bool isSelected, isDraggable;
+        public bool IsSelected;
+        public bool IsDraggable;
     }
 }

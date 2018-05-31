@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace RyansTools
 {
@@ -8,7 +6,7 @@ namespace RyansTools
     {
         public override void Draw()
         {
-            GUI.Box(_nodeRect, "Display This");
+            GUI.Box(NodeRect, "Display This");
         }
 
         public override void PollEvents(Event e)
@@ -16,34 +14,37 @@ namespace RyansTools
             switch (e.type)
             {
                 case EventType.MouseDown:
-                    if (e.button == 0 && _nodeRect.Contains(e.mousePosition))
+                    if (e.button == 0 && NodeRect.Contains(e.mousePosition))
                     {
-                        isSelected = true;
-                        isDraggable = true;
+                        IsSelected = true;
+                        IsDraggable = true;
                     }
+
                     break;
                 case EventType.MouseUp:
                     if (e.button == 0)
                     {
-                        isSelected = false;
-                        isDraggable = false;
+                        IsSelected = false;
+                        IsDraggable = false;
                     }
+
                     break;
                 case EventType.MouseMove:
                     break;
                 case EventType.MouseDrag:
-                    if(e.button == 0 && isDraggable)
+                    if (e.button == 0 && IsDraggable)
                         Drag(e);
                     break;
                 case EventType.Repaint:
                     break;
             }
+
             base.PollEvents(e);
         }
 
         public void Drag(Event e)
         {
-            _nodeRect.position += e.delta;
+            NodeRect.position += e.delta;
         }
     }
 }

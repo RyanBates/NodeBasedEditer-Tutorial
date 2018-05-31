@@ -1,15 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 
 namespace RyansTools
 {
-    public abstract class UIElements 
+    public abstract class UIElements
     {
-        public virtual void Draw() { }
-        public virtual void PollEvents(Event e) { }
-
         protected Rect _rect;
+
+        public virtual void Draw()
+        {
+        }
+
+        public virtual void PollEvents(Event e)
+        {
+        }
     }
 }
