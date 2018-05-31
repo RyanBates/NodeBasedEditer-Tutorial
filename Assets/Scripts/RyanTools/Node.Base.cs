@@ -4,6 +4,11 @@ namespace RyansTools
 {
     public partial class Node : UIElements
     {
+        public Node(Rect rect)
+        {
+            NodeRect = rect;
+        }
+
         public override void Draw()
         {
             GUI.Box(NodeRect, "Display This");
@@ -21,6 +26,7 @@ namespace RyansTools
                     }
 
                     break;
+
                 case EventType.MouseUp:
                     if (e.button == 0)
                     {
@@ -29,13 +35,15 @@ namespace RyansTools
                     }
 
                     break;
-                case EventType.MouseMove:
-                    break;
+
                 case EventType.MouseDrag:
                     if (e.button == 0 && IsDraggable)
                         Drag(e);
                     break;
-                case EventType.Repaint:
+
+                case EventType.KeyDown:
+                    break;
+                case EventType.KeyUp:
                     break;
             }
 

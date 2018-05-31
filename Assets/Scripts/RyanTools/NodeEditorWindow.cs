@@ -6,7 +6,6 @@ namespace RyansTools
 {
     public class NodeEditorWindow : EditorWindow
     {
-        private Node _node;
         private List<Node> _nodes;
 
         [MenuItem("Ryan's/Ryan's Window")]
@@ -18,10 +17,9 @@ namespace RyansTools
 
         private void OnEnable()
         {
-            _node = new Node {NodeRect = new Rect(100, 100, 200, 200)};
-            _nodes = new List<Node> {_node};
+            var node = new Node(new Rect(100, 100, 200, 200));
+            _nodes = new List<Node> {node};
         }
-
 
         private void OnGUI()
         {
@@ -30,13 +28,13 @@ namespace RyansTools
             _nodes.ForEach(n => n.Draw());
         }
 
-
         private void PollEvents(Event e)
         {
             switch (e.type)
             {
                 case EventType.MouseDown:
-                    if (e.button == 1 && !_node.NodeRect.Contains(e.mousePosition)) ProcessContextMenu(e);
+                    if (e.button == 1)
+                        ProcessContextMenu(e);
                     break;
             }
         }
@@ -51,10 +49,8 @@ namespace RyansTools
 
         private void AddNode(Event e)
         {
-            _nodes.Add(new Node
-            {
-                NodeRect = new Rect(e.mousePosition, new Vector2(_node.NodeRect.width, _node.NodeRect.height))
-            });
+            var rect = new Rect(e.mousePosition.x, e.mousePosition.y, 200, 200);
+            _nodes.Add(new Node(rect));
         }
 
         private void AddNode(object obj)
