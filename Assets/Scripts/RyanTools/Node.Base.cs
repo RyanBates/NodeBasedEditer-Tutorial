@@ -5,6 +5,9 @@ namespace RyanTools
 {
     public partial class Node : UIElements
     {
+
+        public Node() { }
+
         /// <summary>
         /// this is the constructor
         /// </summary>
@@ -19,7 +22,7 @@ namespace RyanTools
         /// </summary>
         public override void Draw()
         {
-            GUI.Box(NodeRect, "Display This");
+            GUI.Box(NodeRect, "");
         }
 
 
@@ -37,16 +40,11 @@ namespace RyanTools
                         IsSelected = true;
                         IsDraggable = true;
                     }
-
                     break;
 
                 case EventType.MouseUp:
                     if (e.button == 0)
-                    {
-                        IsSelected = false;
                         IsDraggable = false;
-                    }
-
                     break;
 
                 case EventType.MouseDrag:
