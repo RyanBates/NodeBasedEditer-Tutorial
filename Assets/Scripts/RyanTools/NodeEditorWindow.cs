@@ -38,7 +38,7 @@ namespace RyanTools
             _nodes.ForEach(n => n.Draw());
 
             if (GUILayout.Button(new GUIContent("Open New Window"), EditorStyles.toolbarButton, GUILayout.Width(1400)))
-                OpenNewWindow();
+                CreateWindow();
             if (GUILayout.Button(new GUIContent("Restart"), EditorStyles.toolbarButton, GUILayout.Width(1400)))
                 Restart();
         }
@@ -138,14 +138,6 @@ namespace RyanTools
         private void Restart()
         {
             OnEnable();
-        }
-
-        /// <summary>
-        ///     this allows you to open a whole new window to do other stuff.
-        /// </summary>
-        private void OpenNewWindow()
-        {
-            CreateWindow();
         }
     }
 }
