@@ -1,16 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
 namespace RyanTools
 {
     public class NodeEditorWindow : EditorWindow
     {
         private List<Node> _nodes;
-
-
+        
         /// <summary>
-        /// this creates the window out of the tab that was created from this.
+        ///     this creates the window out of the tab that was created from this.
+        ///
+        ///     DONT MESS WITH THIS ANYMORE
         /// </summary>
         [MenuItem("Ryan's/Ryan's Window")]
         private static void CreateWindow()
@@ -20,7 +22,7 @@ namespace RyanTools
         }
 
         /// <summary>
-        /// this is just the start function for the camera.
+        ///     this is just the start function for the camera.
         /// </summary>
         private void OnEnable()
         {
@@ -29,7 +31,7 @@ namespace RyanTools
         }
 
         /// <summary>
-        /// this is just update for the camera.
+        ///     this is just update for the camera.
         /// </summary>
         private void OnGUI()
         {
@@ -39,7 +41,9 @@ namespace RyanTools
         }
 
         /// <summary>
-        /// takes care of all the inputs or other events.
+        ///     takes care of all the inputs or other events.
+        ///
+        ///     DONT MESS WITH THIS ANYMORE
         /// </summary>
         /// <param name="e"></param>
         private void PollEvents(Event e)
@@ -54,20 +58,36 @@ namespace RyanTools
         }
 
         /// <summary>
-        /// makes a context menu that gives
-        /// one option to Add Node.
+        ///     makes a context menu that gives
+        ///     one option to Add Node.
+        ///
+        ///     STILL NEED TO ADD HOW TO REMOVE A SINGLE NODE
         /// </summary>
         /// <param name="e"></param>
         private void ProcessContextMenu(Event e)
         {
             var gm = new GenericMenu();
+
             gm.AddItem(new GUIContent("Add Node"), false, AddNode, e);
             gm.ShowAsContext();
-            e.Use();
-        }
+
+            gm.AddItem(new GUIContent("Remove All Nodes"), false, RemoveAllNodes, e);
+            gm.ShowAsContext();
+
+            for (int i = 0; i <= _nodes.Count; i++)
+            {
+                if (_nodes[i].NodeRect.Contains(e.mousePosition))
+                {
+                    gm.AddItem(new GUIContent("REMOVE NODE"), false, RemoveNode, e);
+                    gm.ShowAsContext();
+                }
+            }
+    }
 
         /// <summary>
-        /// this is where you add the nodes to the screen from the mouse position.
+        ///     this is where you add the nodes to the screen from the mouse position.
+        ///
+        ///     FINISHED
         /// </summary>
         /// <param name="e"></param>
         private void AddNode(Event e)
@@ -77,8 +97,10 @@ namespace RyanTools
         }
 
         /// <summary>
-        /// this allows you to Add the node to the screen by changing it from
-        /// an the list item to an object.
+        ///     this allows you to Add the node to the screen by changing it from
+        ///     a list item to an object.
+        ///
+        ///     FINISHED
         /// </summary>
         /// <param name="obj"></param>
         private void AddNode(object obj)
@@ -87,5 +109,38 @@ namespace RyanTools
         }
 
         //TODO : start with removing nodes
+
+        /// <summary>
+        ///     allows you to remove all nodes from the list
+        ///
+        ///     FINISHED 
+        /// </summary>
+        /// <param name="obj"></param>
+        private void RemoveAllNodes(object obj)
+        {
+            _nodes = new List<Node>();
+        }
+
+        /// <summary>
+        ///     these allow you to remove one node at a time.
+        ///
+        ///     THESE SHOULD BE DONE NEED TO TEST
+        /// </summary>
+        /// <param name="n"></param>
+        private void RemoveNode(Event e)
+        {
+            for (int i = 0; i <= _nodes.Count; i++)
+            {
+                if (_nodes[i].NodeRect.Contains(e.mousePosition))
+                {
+                    _nodes.Remove(this._nodes[i]);
+                }
+            }
+        }
+
+        private void RemoveNode(object obj)
+        {
+            RemoveNode(obj as Event);
+        }
     }
 }
