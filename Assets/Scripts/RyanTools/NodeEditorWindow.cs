@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
+using UnityEngine.XR.WSA.Input;
 
 namespace RyanTools
 {
@@ -38,6 +39,9 @@ namespace RyanTools
             PollEvents(Event.current);
             _nodes.ForEach(n => n.PollEvents(Event.current));
             _nodes.ForEach(n => n.Draw());
+
+            if (GUILayout.Button(new GUIContent("Restart"), EditorStyles.toolbarButton, GUILayout.Width(1400)))
+                Restart();
         }
 
         /// <summary>
@@ -107,9 +111,7 @@ namespace RyanTools
         {
             AddNode(obj as Event);
         }
-
-        //TODO : start with removing nodes
-
+        
         /// <summary>
         ///     allows you to remove all nodes from the list
         ///
@@ -141,6 +143,11 @@ namespace RyanTools
         private void RemoveNode(object obj)
         {
             RemoveNode(obj as Event);
+        }
+
+        private void Restart()
+        {
+            OnEnable();
         }
     }
 }
